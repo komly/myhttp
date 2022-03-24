@@ -9,8 +9,11 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"sync"
 )
+
+var logger = log.New(os.Stdout, "", 0)
 
 var parallelLimit = flag.Int("parallel", 10, "number of parallel requests, should be > 0")
 
@@ -64,6 +67,6 @@ func main() {
 		return
 	}
 	processURLs(flag.Args(), *parallelLimit, func(s string) {
-		fmt.Println(s)
+		logger.Println(s)
 	})
 }

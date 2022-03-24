@@ -8,6 +8,8 @@ run:
 
 build_and_run: build run
 
+test:
+	go test -race -v
 clean:
 	go clean
 	rm ${BINARY_NAME}

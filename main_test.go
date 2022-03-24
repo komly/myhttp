@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"sort"
+	"sync"
 	"testing"
 )
 
@@ -41,8 +42,11 @@ func TestProcessURLs(t *testing.T) {
 		s2.URL + " ad0234829205b9033196ba818f7a872b",
 	}
 	res := make([]string, 0)
+	mu := sync.Mutex{}
 	processURLs([]string{s.URL, s2.URL}, 10, func(s string) {
+		mu.Lock()
 		res = append(res, s)
+		mu.Unlock()
 	})
 	sort.Sort(sort.StringSlice(res))
 	sort.Sort(sort.StringSlice(expected))
